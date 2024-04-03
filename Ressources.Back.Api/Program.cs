@@ -16,14 +16,21 @@ namespace Ressources.Back.Api
             });
             // Add services to the container.
             builder.Services.AddScoped<ITypeUserRepository, SqlTypeUserRepository>();
+            builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
             builder.Services.AddControllers();
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod());
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowOrigin");
             app.UseAuthorization();
 
 
