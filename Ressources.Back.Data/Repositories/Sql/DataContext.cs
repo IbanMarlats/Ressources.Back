@@ -11,6 +11,9 @@ namespace Ressources.Back.Data.Repositories.Sql
     {
         public DbSet<TypeUserModel> TypeUser { get; set; }
         public DbSet<UserModel> User { get; set; }
+        public DbSet<RessourceModel> Ressource { get; set; }
+        public DbSet<CategoryModel> Category { get; set; }
+        public DbSet<VuModel> Vu { get; set; }
         public DataContext(DbContextOptions<DataContext> options)
            : base(options)
         {
