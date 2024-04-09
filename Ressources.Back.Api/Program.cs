@@ -17,6 +17,9 @@ namespace Ressources.Back.Api
             // Add services to the container.
             builder.Services.AddScoped<ITypeUserRepository, SqlTypeUserRepository>();
             builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
+            builder.Services.AddScoped<ICategoryRepository, SqlCategoryRepository>();
+            builder.Services.AddScoped<IRessourceRepository, SqlRessourceRepository>();
+            builder.Services.AddScoped<IVuRepository, SqlVuRepository>();
             builder.Services.AddControllers();
             builder.Services.AddCors(options =>
             {

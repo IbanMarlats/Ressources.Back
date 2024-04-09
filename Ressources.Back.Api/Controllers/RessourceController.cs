@@ -25,7 +25,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> GetRessourceModelById(int id)
+        public ActionResult<RessourceModel> GetRessourceById(int id)
         {
             var ressource = ressourceRepository.GetRessourceById(id);
             return Ok(ressource);

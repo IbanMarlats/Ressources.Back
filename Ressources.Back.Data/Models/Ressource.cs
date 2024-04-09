@@ -15,5 +15,6 @@ namespace Ressources.Back.Data.Models
         public int NbLike { get; set; }
         public int NbComment { get; set; }
         public int NbVu { get; set; }
+        public int IdCategory { get; set; }
     }
 }

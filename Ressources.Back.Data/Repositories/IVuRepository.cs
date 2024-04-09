@@ -11,8 +11,7 @@ namespace Ressources.Back.Data.Repositories
     {
         VuModel Create(VuModel Vu);
         IEnumerable<VuModel> Read();
-        VuModel GetVuById(int id);
         void Update(int id, VuModel Vu);
-        void Delete(int id);
+        void Delete(int idUser, int idRessource);
     }
 }

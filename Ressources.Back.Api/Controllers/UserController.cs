@@ -25,7 +25,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> GetTypeUserById(int id)
+        public ActionResult<UserModel> GetUserById(int id)
         {
             var user = userRepository.GetUserById(id);
             return Ok(user);
