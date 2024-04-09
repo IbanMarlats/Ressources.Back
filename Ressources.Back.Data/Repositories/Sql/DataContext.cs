@@ -9,6 +9,10 @@ namespace Ressources.Back.Data.Repositories.Sql
 {
     public class DataContext : DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VuModel>().HasKey(v => new { v.IdUser, v.IdRessource });
+        }
         public DbSet<TypeUserModel> TypeUser { get; set; }
         public DbSet<UserModel> User { get; set; }
         public DbSet<RessourceModel> Ressource { get; set; }

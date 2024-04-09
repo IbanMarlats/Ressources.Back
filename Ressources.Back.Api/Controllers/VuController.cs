@@ -23,13 +23,7 @@ namespace Ressources.Back.Api.Controllers
             var vus = vuRepository.Read();
             return Ok(vus);
         }
-        [HttpGet("{id}")]
-        [EnableCors("AllowOrigin")]
-        public ActionResult<VuModel> GetVuById(int id)
-        {
-            var vu = vuRepository.GetVuById(id);
-            return Ok(vu);
-        }
+        
         [HttpPost]
         [EnableCors("AllowOrigin")]
         public ActionResult<VuModel> Post([FromQuery] VuModel model)
@@ -45,9 +39,9 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpDelete]
         [EnableCors("AllowOrigin")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int idUser, int idRessource)
         {
-            vuRepository.Delete(id);
+            vuRepository.Delete(idUser, idRessource);
             return Ok();
         }
     }

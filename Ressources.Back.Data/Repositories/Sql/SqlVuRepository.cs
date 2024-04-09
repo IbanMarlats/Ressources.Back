@@ -18,24 +18,6 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             return context.Vu.ToList();
         }
-        public VuModel GetVuById(int id)
-        {
-            VuModel? vu = context.Vu.FirstOrDefault(c => c.Id == id);
-
-            if (vu != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"La vu est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucune vu trouvée avec cet identifiant.");
-            }
-
-            return vu;
-
-        }
         public VuModel Create(VuModel model)
         {
             context.Vu.Add(model);
@@ -47,9 +29,9 @@ namespace Ressources.Back.Data.Repositories.Sql
             context.Vu.Update(model);
             context.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(int idUser, int idRessource)
         {
-            var model = context.Vu.FirstOrDefault(x => x.Id == id);
+            var model = context.Vu.FirstOrDefault(x => x.IdUser == idUser && x.IdRessource == idRessource);
             if (model == null)
                 return;
             context.Vu.Remove(model);
