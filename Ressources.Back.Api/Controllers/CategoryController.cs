@@ -32,7 +32,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<CategoryModel> Post([FromQuery] CategoryModel model)
+        public ActionResult<CategoryModel> Post([FromBody] CategoryModel model)
         {
             return Ok(categoryRepository.Create(model));
         }

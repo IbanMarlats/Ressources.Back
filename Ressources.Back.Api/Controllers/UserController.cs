@@ -32,7 +32,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> Post([FromQuery] UserModel model)
+        public ActionResult<UserModel> Post([FromBody] UserModel model)
         {
             return Ok(userRepository.Create(model));
         }

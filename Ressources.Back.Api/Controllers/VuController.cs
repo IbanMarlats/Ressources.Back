@@ -26,7 +26,7 @@ namespace Ressources.Back.Api.Controllers
         
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<VuModel> Post([FromQuery] VuModel model)
+        public ActionResult<VuModel> Post([FromBody] VuModel model)
         {
             return Ok(vuRepository.Create(model));
         }

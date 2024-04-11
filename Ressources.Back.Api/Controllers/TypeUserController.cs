@@ -29,7 +29,7 @@ namespace Ressources.Back.Api.Controllers
         }
         
         [HttpPost]
-        public ActionResult<TypeUserModel> Post([FromQuery] TypeUserModel model)
+        public ActionResult<TypeUserModel> Post([FromBody] TypeUserModel model)
         {
             return Ok(typeUserRepository.Create(model));
         }
