@@ -32,7 +32,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<RessourceModel> Post([FromQuery] RessourceModel model)
+        public ActionResult<RessourceModel> Post([FromBody] RessourceModel model)
         {
             return Ok(ressourceRepository.Create(model));
         }
