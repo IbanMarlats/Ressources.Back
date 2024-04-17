@@ -44,8 +44,20 @@ namespace Ressources.Back.Data.Repositories.Sql
         }
         public void Update(int id, UserModel model)
         {
-            context.User.Update(model);
-            context.SaveChanges();
+            var existingUser = context.User.FirstOrDefault(u => u.Id == id);
+            if (existingUser != null)
+            {
+                existingUser.Login = model.Login;
+                existingUser.Mdp = model.Mdp;
+                existingUser.Activate = model.Activate;
+                existingUser.Age = model.Age;
+                existingUser.SituationFamiliale = model.SituationFamiliale;
+                existingUser.CSP = model.CSP;
+                existingUser.Loisir = model.Loisir;
+                existingUser.Autre = model.Autre;
+                existingUser.IdTypeUser = model.IdTypeUser;
+                context.SaveChanges();
+            }
         }
         public void Delete(int id)
         {

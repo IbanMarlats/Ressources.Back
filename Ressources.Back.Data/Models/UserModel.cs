@@ -12,6 +12,7 @@ namespace Ressources.Back.Data.Models
         public string Login { get; set; } = "";
         public string Mdp { get; set; } = "";
 
+        public int Activate { get; set; }
         public int Age { get; set; }
         public string SituationFamiliale { get; set; } = "";
 

@@ -43,7 +43,7 @@ namespace Ressources.Back.Api.Controllers
             categoryRepository.Update(id, model);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [EnableCors("AllowOrigin")]
         public ActionResult Delete(int id)
         {

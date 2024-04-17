@@ -44,8 +44,12 @@ namespace Ressources.Back.Data.Repositories.Sql
         }
         public void Update(int id, CategoryModel model)
         {
-            context.Category.Update(model);
-            context.SaveChanges();
+            var existingCategory = context.Category.FirstOrDefault(c => c.Id == id);
+            if (existingCategory != null)
+            {
+                existingCategory.Libelle = model.Libelle;
+                context.SaveChanges();
+            }
         }
         public void Delete(int id)
         {
