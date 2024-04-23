@@ -19,6 +19,7 @@ namespace Ressources.Back.Data.Models
         public string Loisir { get; set; } = "";
         public string Autre {  get; set; } = "";
         public int IdTypeUser { get; set; } = 1;
+        public int IdStatus { get; set; }
         //public virtual UserModel TypeUser { get; set; }
     }
 }

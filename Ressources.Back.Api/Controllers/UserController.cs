@@ -38,7 +38,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult Put(int id, UserModel model)
+        public ActionResult Put(int id,  UserModel model)
         {
             userRepository.Update(id, model);
             return Ok();
