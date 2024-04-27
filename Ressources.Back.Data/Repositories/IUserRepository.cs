@@ -11,8 +11,9 @@ namespace Ressources.Back.Data.Repositories
     {
         UserModel Create(UserModel User);
         IEnumerable<UserModel> Read();
-        UserModel GetUserById(int id);
+        UserModel GetUserByLogin(string login);
         void Update(int id, UserModel User);
         void Delete(int id);
+        UserModel Authenticate(string login, string mdp);
     }
 }

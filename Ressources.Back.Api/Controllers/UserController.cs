@@ -23,11 +23,12 @@ namespace Ressources.Back.Api.Controllers
             var users = userRepository.Read();
             return Ok(users);
         }
-        [HttpGet("{id}")]
+        
+        [HttpGet("{login}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> GetUserById(int id)
+        public ActionResult<UserModel> GetUserByLogin(string login)
         {
-            var user = userRepository.GetUserById(id);
+            var user = userRepository.GetUserByLogin(login);
             return Ok(user);
         }
         [HttpPost]
@@ -38,7 +39,7 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult Put(int id, UserModel model)
+        public ActionResult Put(int id,  UserModel model)
         {
             userRepository.Update(id, model);
             return Ok();
@@ -49,6 +50,19 @@ namespace Ressources.Back.Api.Controllers
         {
             userRepository.Delete(id);
             return Ok();
+        }
+        [HttpPost("authenticate")]
+        [EnableCors("AllowOrigin")]
+        public ActionResult<UserModel> Authenticate([FromBody] UserModel userModel)
+        {
+            var user = userRepository.Authenticate(userModel.Login, userModel.Mdp) ;
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "Nom d'utilisateur ou mot de passe incorrect" });
+            }
+
+            return Ok(user);
         }
     }
 }

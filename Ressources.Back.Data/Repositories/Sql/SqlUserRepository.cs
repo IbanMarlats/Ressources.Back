@@ -18,20 +18,11 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             return context.User.ToList();
         }
-        public UserModel GetUserById(int id)
-        {
-            UserModel? user = context.User.FirstOrDefault(c => c.Id == id);
+        
 
-            if (user != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"L'utilisateur' est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucun user trouvé avec cet identifiant.");
-            }
+        public UserModel GetUserByLogin(string login)
+        {
+            UserModel? user = context.User.FirstOrDefault(c => c.Login == login );
 
             return user;
 
@@ -66,6 +57,11 @@ namespace Ressources.Back.Data.Repositories.Sql
                 return;
             context.User.Remove(model);
             context.SaveChanges();
+        }
+        public UserModel Authenticate(string login, string mdp)
+        {
+            var user = context.User.FirstOrDefault(c => c.Login == login && c.Mdp == mdp);
+            return user;
         }
     }
 }
