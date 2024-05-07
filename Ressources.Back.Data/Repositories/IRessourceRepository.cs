@@ -14,5 +14,6 @@ namespace Ressources.Back.Data.Repositories
         RessourceModel GetRessourceById(int id);
         void Update(int id, RessourceModel Ressource);
         void Delete(int id);
+        IEnumerable<RessourceModel> GetRessourcesByNameAndCategory(string searchText, int categoryId);
     }
 }

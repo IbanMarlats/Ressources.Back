@@ -44,8 +44,14 @@ namespace Ressources.Back.Data.Repositories.Sql
         }
         public void Update(int id, RessourceModel model)
         {
-            context.Ressource.Update(model);
-            context.SaveChanges();
+            var existingRessource = context.Ressource.FirstOrDefault(r => r.Id == id);
+            if (existingRessource != null)
+            {
+                existingRessource.Titre = model.Titre;
+                existingRessource.IdCategory = model.IdCategory;
+                existingRessource.IdUser = model.IdUser;
+                context.SaveChanges();
+            }
         }
         public void Delete(int id)
         {
@@ -54,6 +60,23 @@ namespace Ressources.Back.Data.Repositories.Sql
                 return;
             context.Ressource.Remove(model);
             context.SaveChanges();
+        }
+
+        public IEnumerable<RessourceModel> GetRessourcesByNameAndCategory(string searchText, int categoryId)
+        {
+            IQueryable<RessourceModel> query = context.Ressource;
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                query = query.Where(r => r.Titre.Contains(searchText));
+            }
+
+            if (categoryId != 0)
+            {
+                query = query.Where(r => r.IdCategory == categoryId);
+            }
+
+            return query.ToList();
         }
     }
 }

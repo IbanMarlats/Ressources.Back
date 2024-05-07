@@ -20,6 +20,7 @@ namespace Ressources.Back.Api
             builder.Services.AddScoped<ICategoryRepository, SqlCategoryRepository>();
             builder.Services.AddScoped<IRessourceRepository, SqlRessourceRepository>();
             builder.Services.AddScoped<IVuRepository, SqlVuRepository>();
+            builder.Services.AddScoped<IPublicationRepository, SqlPublicationRepository>();
             builder.Services.AddControllers();
             builder.Services.AddCors(options =>
             {
