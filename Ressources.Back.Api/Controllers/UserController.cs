@@ -59,7 +59,7 @@ namespace Ressources.Back.Api.Controllers
 
             if (user == null)
             {
-                return BadRequest(new { message = "Nom d'utilisateur ou mot de passe incorrect" });
+                return StatusCode(400);
             }
 
             return Ok(user);
