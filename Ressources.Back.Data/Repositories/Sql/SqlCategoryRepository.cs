@@ -51,13 +51,43 @@ namespace Ressources.Back.Data.Repositories.Sql
                 context.SaveChanges();
             }
         }
-        public void Delete(int id)
+        /*public void Delete(int id)
         {
             var model = context.Category.FirstOrDefault(x => x.Id == id);
             if (model == null)
                 return;
             context.Category.Remove(model);
             context.SaveChanges();
+        }*/
+        
+        public void Delete(int id)
+        {
+            // Recherche de la catégorie par son ID
+            var category = context.Category.FirstOrDefault(x => x.Id == id);
+
+            // Vérification si la catégorie existe
+            if (category == null)
+            {
+                // Si la catégorie n'existe pas, vous pouvez lever une exception ou simplement retourner sans rien faire.
+                //Dans cet exemple, nous choisissons de retourner sans rien faire.
+                return;
+            }
+
+            // Vérification s'il existe des ressources associées à cette catégorie
+            var resourcesCount = context.Ressource.Count(r => r.IdCategory == id);
+
+            if (resourcesCount > 0)
+            {
+                // Si des ressources sont associées à cette catégorie, renvoyer une erreur
+                throw new Exception("Impossible de supprimer cette catégorie car elle a des ressources associées.");
+
+        }
+            else
+            {
+                // Suppression de la catégorie
+                context.Category.Remove(category);
+                context.SaveChanges();
+            }
         }
     }
 }
