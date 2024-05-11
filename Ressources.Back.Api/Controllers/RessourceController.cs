@@ -54,7 +54,6 @@ namespace Ressources.Back.Api.Controllers
         [EnableCors("AllowOrigin")]
         public ActionResult<IEnumerable<RessourceModel>> GetRessourcesByNameAndCategory([FromQuery] string? searchText, [FromQuery] int? categoryId)
         {
-            // Convertir int? en int en utilisant la propriété .Value
             int categoryIdNonNull = categoryId.HasValue ? categoryId.Value : 0;
 
             var ressources = ressourceRepository.GetRessourcesByNameAndCategory(searchText, categoryIdNonNull);

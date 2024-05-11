@@ -22,17 +22,6 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             RessourceModel? ressource = context.Ressource.FirstOrDefault(c => c.Id == id);
 
-            if (ressource != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"La ressource est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucune ressource trouvée avec cet identifiant.");
-            }
-
             return ressource;
 
         }

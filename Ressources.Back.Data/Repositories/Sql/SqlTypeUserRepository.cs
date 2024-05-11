@@ -22,17 +22,6 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             TypeUserModel? typeUser = context.TypeUser.FirstOrDefault(c => c.Id == id);
 
-            if (typeUser != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"La typeUser est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucun typeUser trouvé avec cet identifiant.");
-            }
-
             return typeUser;
 
         }

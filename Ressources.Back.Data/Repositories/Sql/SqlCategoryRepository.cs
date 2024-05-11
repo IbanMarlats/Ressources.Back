@@ -22,17 +22,6 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             CategoryModel? category = context.Category.FirstOrDefault(c => c.Id == id);
 
-            if (category != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"La categorie est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucune catégorie trouvée avec cet identifiant.");
-            }
-
             return category;
 
         }

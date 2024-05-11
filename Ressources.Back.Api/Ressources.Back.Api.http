@@ -1,6 +1,6 @@
 @Ressources.Back.Api_HostAddress = http://localhost:5036
 
-GET {{Ressources.Back.Api_HostAddress}}/weatherforecast/
+GET {{Ressources.Back.Api_HostAddress}}/api/User
 Accept: application/json
 
 ###

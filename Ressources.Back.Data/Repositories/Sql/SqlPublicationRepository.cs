@@ -22,17 +22,6 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             PublicationModel? publication = context.Publication.FirstOrDefault(c => c.Id == id);
 
-            if (publication != null)
-            {
-                // Accès sécurisé aux propriétés de commentaire car commentaire n'est pas null
-                Console.WriteLine($"La publication est trouvé");
-            }
-            else
-            {
-                // Gérer le cas où aucun commentaire n'est trouvé avec l'identifiant spécifié
-                Console.WriteLine("Aucune publication trouvée avec cet identifiant.");
-            }
-
             return publication;
 
         }
