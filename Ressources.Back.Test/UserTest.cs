@@ -1,11 +1,8 @@
-﻿using NUnit.Framework;
-using Moq;
+﻿using Moq;
 using Ressources.Back.Api.Controllers;
 using Ressources.Back.Data.Models;
 using Ressources.Back.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace Ressources.Back.Api.Tests
 {
