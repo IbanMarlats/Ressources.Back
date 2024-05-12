@@ -57,23 +57,19 @@ namespace Ressources.Back.Data.Repositories.Sql
             // Vérification si la catégorie existe
             if (category == null)
             {
-                // Si la catégorie n'existe pas, vous pouvez lever une exception ou simplement retourner sans rien faire.
-                //Dans cet exemple, nous choisissons de retourner sans rien faire.
                 return;
             }
 
-            // Vérification s'il existe des ressources associées à cette catégorie
             var resourcesCount = context.Ressource.Count(r => r.IdCategory == id);
 
             if (resourcesCount > 0)
             {
-                // Si des ressources sont associées à cette catégorie, renvoyer une erreur
                 throw new Exception("Impossible de supprimer cette catégorie car elle a des ressources associées.");
 
         }
             else
             {
-                // Suppression de la catégorie
+                
                 context.Category.Remove(category);
                 context.SaveChanges();
             }

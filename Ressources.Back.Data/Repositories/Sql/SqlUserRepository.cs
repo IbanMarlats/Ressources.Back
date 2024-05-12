@@ -29,6 +29,11 @@ namespace Ressources.Back.Data.Repositories.Sql
         }
         public UserModel Create(UserModel model)
         {
+            
+            if (GetUserByLogin(model.Login) != null)
+            {
+                throw new InvalidOperationException("Username already exists");
+            }
             context.User.Add(model);
             context.SaveChanges();
             return model;
