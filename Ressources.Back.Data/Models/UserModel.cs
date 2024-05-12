@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ressources.Back.Data.Models
+﻿namespace Ressources.Back.Data.Models
 {
     public class UserModel
     {
@@ -21,6 +15,5 @@ namespace Ressources.Back.Data.Models
         public string Autre {  get; set; } = "";
         public int IdTypeUser { get; set; } = 1;
         public int IdStatus { get; set; }
-        //public virtual UserModel TypeUser { get; set; }
     }
 }
