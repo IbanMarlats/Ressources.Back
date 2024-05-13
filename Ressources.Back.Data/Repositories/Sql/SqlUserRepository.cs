@@ -27,6 +27,13 @@ namespace Ressources.Back.Data.Repositories.Sql
             return user;
 
         }
+        public UserModel GetUserById(int id)
+        {
+            UserModel? user = context.User.FirstOrDefault(c => c.Id == id);
+
+            return user;
+
+        }
         public UserModel Create(UserModel model)
         {
             

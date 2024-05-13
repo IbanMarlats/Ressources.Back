@@ -23,7 +23,13 @@ namespace Ressources.Back.Api.Controllers
             var users = userRepository.Read();
             return Ok(users);
         }
-        
+        [HttpGet("byId/{id}")]
+        [EnableCors("AllowOrigin")]
+        public ActionResult<UserModel> GetUserById(int id)
+        {
+            var user = userRepository.GetUserById(id);
+            return Ok(user);
+        }
         [HttpGet("{login}")]
         [EnableCors("AllowOrigin")]
         public ActionResult<UserModel> GetUserByLogin(string login)
