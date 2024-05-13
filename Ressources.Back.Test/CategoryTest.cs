@@ -57,5 +57,42 @@ namespace Ressources.Back.Test
 
             Assert.IsInstanceOf<OkResult>(result);
         }
+
+        [Test]
+        public void GetById()
+        {
+            var categoryId = 1;
+            var expectedCategory = new CategoryModel { Id = categoryId, Libelle = "Test Category" };
+            _mockCategoryRepository.Setup(repo => repo.GetCategoryById(categoryId)).Returns(expectedCategory);
+
+            var result = _controller.GetCategoryById(categoryId);
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            Assert.AreEqual(expectedCategory, okResult.Value);
+        }
+
+        [Test]
+        public void Get()
+        {
+            var expectedCategories = new List<CategoryModel>
+            {
+                new CategoryModel { Id = 1, Libelle = "Category 1" },
+                new CategoryModel { Id = 2, Libelle = "Category 2" }
+            };
+            _mockCategoryRepository.Setup(repo => repo.Read()).Returns(expectedCategories);
+
+            var result = _controller.Get();
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var categories = okResult.Value as List<CategoryModel>;
+            Assert.IsNotNull(categories);
+            Assert.AreEqual(expectedCategories.Count, categories.Count);
+            for (int i = 0; i < expectedCategories.Count; i++)
+            {
+                Assert.AreEqual(expectedCategories[i], categories[i]);
+            }
+        }
     }
 }

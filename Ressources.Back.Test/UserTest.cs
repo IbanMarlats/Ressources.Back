@@ -80,5 +80,43 @@ namespace Ressources.Back.Api.Tests
             Assert.IsNotNull(statusCodeResult);
             Assert.AreEqual(400, statusCodeResult.StatusCode);
         }
+
+        [Test]
+        public void GetById()
+        {
+            var userId = 1;
+            var expectedUser = new UserModel { Id = userId, Login = "TestUser", Mdp = "password", Activate = 1, Age = 25, SituationFamiliale = "Célibataire", CSP = "Étudiant", Loisir = "Musique", Autre = "Rien", IdTypeUser = 1, IdStatus = 1 };
+            _mockUserRepository.Setup(repo => repo.GetUserById(userId)).Returns(expectedUser);
+
+            var result = _controller.GetUserById(userId);
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            Assert.AreEqual(expectedUser, okResult.Value);
+        }
+
+        [Test]
+        public void Get()
+        {
+            var expectedUsers = new List<UserModel>
+            {
+                new UserModel { Id = 1, Login = "User1", Mdp = "password", Activate = 1, Age = 25, SituationFamiliale = "Célibataire", CSP = "Étudiant", Loisir = "Musique", Autre = "Rien", IdTypeUser = 1, IdStatus = 1 },
+                new UserModel { Id = 2, Login = "User2", Mdp = "password", Activate = 1, Age = 30, SituationFamiliale = "Marié", CSP = "Salarié", Loisir = "Sport", Autre = "Rien", IdTypeUser = 2, IdStatus = 1 }
+            };
+            _mockUserRepository.Setup(repo => repo.Read()).Returns(expectedUsers);
+
+            var result = _controller.Get();
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var users = okResult.Value as List<UserModel>;
+            Assert.IsNotNull(users);
+            Assert.AreEqual(expectedUsers.Count, users.Count);
+            for (int i = 0; i < expectedUsers.Count; i++)
+            {
+                Assert.AreEqual(expectedUsers[i], users[i]);
+            }
+        }
+
     }
 }

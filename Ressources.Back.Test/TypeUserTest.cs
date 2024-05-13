@@ -23,6 +23,7 @@ namespace Ressources.Back.Test
             mockTypeUserRepository = new Mock<ITypeUserRepository>();
             controller = new TypeUserController(mockTypeUserRepository.Object);
         }
+
         [Test]
         public void Post()
         {
@@ -32,6 +33,7 @@ namespace Ressources.Back.Test
             var okResult = result.Result as OkObjectResult;
             Assert.AreEqual(newTypeUser, okResult.Value);
         }
+
         [Test]
         public void Put()
         {
@@ -42,6 +44,7 @@ namespace Ressources.Back.Test
 
             Assert.IsInstanceOf<OkResult>(result);
         }
+
         [Test]
         public void Delete()
         {
@@ -51,5 +54,43 @@ namespace Ressources.Back.Test
 
             Assert.IsInstanceOf<OkResult>(result);
         }
+
+        [Test]
+        public void GetById()
+        {
+            var typeUserId = 1;
+            var expectedTypeUser = new TypeUserModel { Id = typeUserId, Libelle = "Test TypeUser" };
+            mockTypeUserRepository.Setup(repo => repo.GetTypeUserById(typeUserId)).Returns(expectedTypeUser);
+
+            var result = controller.GetTypeUserById(typeUserId);
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            Assert.AreEqual(expectedTypeUser, okResult.Value);
+        }
+
+        [Test]
+        public void Get()
+        {
+            var expectedTypeUsers = new List<TypeUserModel>
+    {
+        new TypeUserModel { Id = 1, Libelle = "TypeUser 1" },
+        new TypeUserModel { Id = 2, Libelle = "TypeUser 2" }
+    };
+            mockTypeUserRepository.Setup(repo => repo.Read()).Returns(expectedTypeUsers);
+
+            var result = controller.Get();
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var typeUsers = okResult.Value as List<TypeUserModel>;
+            Assert.IsNotNull(typeUsers);
+            Assert.AreEqual(expectedTypeUsers.Count, typeUsers.Count);
+            for (int i = 0; i < expectedTypeUsers.Count; i++)
+            {
+                Assert.AreEqual(expectedTypeUsers[i], typeUsers[i]);
+            }
+        }
+
     }
 }

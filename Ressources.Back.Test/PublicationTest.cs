@@ -57,5 +57,44 @@ namespace Ressources.Back.Test
 
             Assert.IsInstanceOf<OkResult>(result);
         }
+
+        [Test]
+        public void GetById()
+        {
+            var publicationId = 1;
+            var expectedPublication = new PublicationModel { Id = publicationId, Titre = "Test Publication", Contenu = "Test content", NbLike = 5, IdRessource = 10 };
+            _mockPublicationRepository.Setup(repo => repo.GetPublicationById(publicationId)).Returns(expectedPublication);
+
+            var result = _controller.GetPublicationById(publicationId);
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            Assert.AreEqual(expectedPublication, okResult.Value);
+        }
+
+        [Test]
+        public void GetPublicationByRessourceId()
+        {
+            var ressourceId = 10;
+            var expectedPublications = new List<PublicationModel>
+            {
+                new PublicationModel { Id = 1, Titre = "Publication 1", Contenu = "Contenu 1", NbLike = 5, IdRessource = ressourceId },
+                new PublicationModel { Id = 2, Titre = "Publication 2", Contenu = "Contenu 2", NbLike = 3, IdRessource = ressourceId }
+
+            };
+            _mockPublicationRepository.Setup(repo => repo.GetPublicationsByRessourceId(ressourceId)).Returns(expectedPublications);
+
+            var result = _controller.GetPublicationsByRessourceId(ressourceId);
+
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            var publications = okResult.Value as List<PublicationModel>;
+            Assert.IsNotNull(publications);
+            Assert.AreEqual(expectedPublications.Count, publications.Count);
+            for (int i = 0; i < expectedPublications.Count; i++)
+            {
+                Assert.AreEqual(expectedPublications[i], publications[i]);
+            }
+        }
     }
 }
