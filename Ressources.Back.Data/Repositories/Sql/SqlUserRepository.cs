@@ -71,7 +71,7 @@ namespace Ressources.Back.Data.Repositories.Sql
             context.SaveChanges();
         }
         public UserModel Authenticate(string login, string mdp)
-        {
+        {   
             var user = context.User.FirstOrDefault(c => c.Login == login && c.Mdp == mdp);
             return user;
         }
