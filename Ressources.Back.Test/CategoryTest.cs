@@ -25,16 +25,28 @@ namespace Ressources.Back.Test
         }
 
         [Test]
-        public void Post()
+        public void Post_Administrator()
         {
-            var newCategory = new CategoryModel { Id = 3, Libelle = "newCategory"};
+            var newCategory = new CategoryModel { Id = 3, Libelle = "TestCategorie" };
             _mockCategoryRepository.Setup(repo => repo.Create(newCategory)).Returns(newCategory);
 
-            var result = _controller.Post(newCategory);
+            var adminUser = new UserModel { IdTypeUser = 2 };
+
+            var result = _controller.Post(newCategory, adminUser);
 
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var okResult = result.Result as OkObjectResult;
             Assert.AreEqual(newCategory, okResult.Value);
+        }
+        [Test]
+        public void Post_NonAdministrator()
+        {
+            var newCategory = new CategoryModel { Id = 4, Libelle = "newCategory" };
+            var nonAdminUser = new UserModel { IdTypeUser = 1 };
+
+            var result = _controller.Post(newCategory, nonAdminUser);
+
+            Assert.IsInstanceOf<UnauthorizedResult>(result.Result);
         }
 
         [Test]

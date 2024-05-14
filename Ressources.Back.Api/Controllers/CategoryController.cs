@@ -32,9 +32,16 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<CategoryModel> Post([FromBody] CategoryModel model)
+        public ActionResult<CategoryModel> Post([FromBody] CategoryModel model, UserModel currentUser)
         {
-            return Ok(categoryRepository.Create(model));
+
+            if (currentUser.IdTypeUser != 2) 
+            {
+                return Unauthorized(); 
+            }
+
+            var category = _categoryRepository.Create(model);
+            return Ok(category);
         }
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
@@ -50,5 +57,6 @@ namespace Ressources.Back.Api.Controllers
             categoryRepository.Delete(id);
             return Ok();
         }
+
     }
 }

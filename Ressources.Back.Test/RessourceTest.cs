@@ -11,7 +11,7 @@ using Ressources.Back.Data.Repositories;
 
 namespace Ressources.Back.Test
 {
-    internal class RessourceTest
+    public class RessourceTest
     {
         private RessourceController _controller;
         private Mock<IRessourceRepository> _mockRessourceRepository;
