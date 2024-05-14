@@ -68,6 +68,11 @@ namespace Ressources.Back.Api.Controllers
                 return StatusCode(400);
             }
 
+            else if (user.Activate == 0)
+            {
+                throw new Exception("Votre compte est désactivé, veuillez contacter le support.");
+            }
+
             return Ok(user);
         }
     }
