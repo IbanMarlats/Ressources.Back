@@ -39,8 +39,12 @@ namespace Ressources.Back.Api.Controllers
         }
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> Post([FromBody] UserModel model)
+        public ActionResult<UserModel> Post([FromBody] UserModel model, UserModel currentuser)
         {
+            if (currentuser.IdTypeUser != 4)
+            {
+                return Unauthorized();
+            }
             return Ok(userRepository.Create(model));
         }
         [HttpPut("{id}")]
@@ -62,7 +66,7 @@ namespace Ressources.Back.Api.Controllers
         public ActionResult<UserModel> Authenticate([FromBody] UserModel userModel)
         {
             var user = userRepository.Authenticate(userModel.Login, userModel.Mdp) ;
-
+            
             if (user == null)
             {
                 return StatusCode(400);

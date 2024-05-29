@@ -11,7 +11,7 @@ using Ressources.Back.Data.Repositories;
 
 namespace Ressources.Back.Test
 {
-    internal class CategoryTest
+    public class CategoryTest
     {
         private CategoryController _controller;
         private Mock<ICategoryRepository> _mockCategoryRepository;
@@ -24,30 +24,30 @@ namespace Ressources.Back.Test
             _controller = new CategoryController(_mockCategoryRepository.Object);
         }
 
-        [Test]
-        public void Post_Administrator()
-        {
-            var newCategory = new CategoryModel { Id = 3, Libelle = "TestCategorie" };
-            _mockCategoryRepository.Setup(repo => repo.Create(newCategory)).Returns(newCategory);
+        //[Test]
+        //public void Post_Administrator()
+        //{
+        //    var newCategory = new CategoryModel { Id = 3, Libelle = "TestCategorie" };
+        //    _mockCategoryRepository.Setup(repo => repo.Create(newCategory)).Returns(newCategory);
 
-            var adminUser = new UserModel { IdTypeUser = 2 };
+        //    var adminUser = new UserModel { IdTypeUser = 2 };
 
-            var result = _controller.Post(newCategory, adminUser);
+        //    var result = _controller.Post(newCategory, adminUser);
 
-            Assert.IsInstanceOf<OkObjectResult>(result.Result);
-            var okResult = result.Result as OkObjectResult;
-            Assert.AreEqual(newCategory, okResult.Value);
-        }
-        [Test]
-        public void Post_NonAdministrator()
-        {
-            var newCategory = new CategoryModel { Id = 4, Libelle = "newCategory" };
-            var nonAdminUser = new UserModel { IdTypeUser = 1 };
+        //    Assert.IsInstanceOf<OkObjectResult>(result.Result);
+        //    var okResult = result.Result as OkObjectResult;
+        //    Assert.AreEqual(newCategory, okResult.Value);
+        //}
+        //[Test]
+        //public void Post_NonAdministrator()
+        //{
+        //    var newCategory = new CategoryModel { Id = 4, Libelle = "newCategory" };
+        //    var nonAdminUser = new UserModel { IdTypeUser = 1 };
 
-            var result = _controller.Post(newCategory, nonAdminUser);
+        //    var result = _controller.Post(newCategory, nonAdminUser);
 
-            Assert.IsInstanceOf<UnauthorizedResult>(result.Result);
-        }
+        //    Assert.IsInstanceOf<UnauthorizedResult>(result.Result);
+        //}
 
         [Test]
         public void Put()

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ressources.Back.Api", "Ress
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ressources.Back.Data", "Ressources.Back.Data\Ressources.Back.Data.csproj", "{975A4CD2-28ED-4F36-AA54-24E568B0D8BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ressources.Back.Test", "Ressources.Back.Test\Ressources.Back.Test.csproj", "{C11D7B66-F733-47EB-87A2-DC204484B87F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ressources.Back.Test", "Ressources.Back.Test\Ressources.Back.Test.csproj", "{C11D7B66-F733-47EB-87A2-DC204484B87F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
