@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Ressources.Back.Data.Models;
 using Ressources.Back.Data.Repositories;
+using System;
+using System.Collections.Generic;
 
 namespace Ressources.Back.Api.Controllers
 {
@@ -9,75 +12,127 @@ namespace Ressources.Back.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository userRepository;
         private readonly IUserRepository _userRepository;
+
         public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            this.userRepository = userRepository;
         }
+
         [HttpGet]
         [EnableCors("AllowOrigin")]
         public ActionResult<IEnumerable<UserModel>> Get()
         {
-            var users = userRepository.Read();
+            var users = _userRepository.Read();
+            foreach (var user in users)
+            {
+                user.DecryptData();
+            }
             return Ok(users);
         }
+
         [HttpGet("byId/{id}")]
         [EnableCors("AllowOrigin")]
         public ActionResult<UserModel> GetUserById(int id)
         {
-            var user = userRepository.GetUserById(id);
+            var user = _userRepository.GetUserById(id);
+            if (user != null)
+            {
+                user.DecryptData();
+            }
             return Ok(user);
         }
+
         [HttpGet("{login}")]
         [EnableCors("AllowOrigin")]
         public ActionResult<UserModel> GetUserByLogin(string login)
         {
-            var user = userRepository.GetUserByLogin(login);
+            var user = _userRepository.GetUserByLogin(login);
+            if (user != null)
+            {
+                user.DecryptData();
+            }
             return Ok(user);
         }
+
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<UserModel> Post([FromBody] UserModel model, UserModel currentuser)
+        public ActionResult<UserModel> Post([FromBody] UserModel model)
         {
-            if (currentuser.IdTypeUser != 4)
+            model.Mdp = HashPassword(model.Mdp);
+            model.EncryptData();
+            return Ok(_userRepository.Create(model));
+        }
+
+        [HttpPut("{id}")]
+        [EnableCors("AllowOrigin")]
+        public ActionResult Put(int id, [FromBody] UserModel model, [FromHeader] int currentUserId)
+        {
+            var currentuser = GetCurrentUser(currentUserId);
+
+            if (currentuser == null || currentuser.IdTypeUser != 4)
             {
                 return Unauthorized();
             }
-            return Ok(userRepository.Create(model));
-        }
-        [HttpPut("{id}")]
-        [EnableCors("AllowOrigin")]
-        public ActionResult Put(int id,  UserModel model)
-        {
-            userRepository.Update(id, model);
+
+            model.EncryptData();
+            _userRepository.Update(id, model);
             return Ok();
         }
-        [HttpDelete]
+
+        [HttpDelete("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, [FromHeader] int currentUserId)
         {
-            userRepository.Delete(id);
+            var currentuser = GetCurrentUser(currentUserId);
+
+            if (currentuser == null || currentuser.IdTypeUser != 4)
+            {
+                return Unauthorized();
+            }
+
+            _userRepository.Delete(id);
             return Ok();
         }
+
         [HttpPost("authenticate")]
         [EnableCors("AllowOrigin")]
         public ActionResult<UserModel> Authenticate([FromBody] UserModel userModel)
         {
-            var user = userRepository.Authenticate(userModel.Login, userModel.Mdp) ;
-            
-            if (user == null)
+            var user = _userRepository.GetUserByLogin(userModel.Login);
+
+            if (user == null || !VerifyPassword(userModel.Mdp, user.Mdp))
             {
                 return StatusCode(400);
             }
 
-            else if (user.Activate == 0)
+            if (user.Activate == 0)
             {
                 throw new Exception("Votre compte est désactivé, veuillez contacter le support.");
             }
 
+            user.DecryptData();
             return Ok(user);
+        }
+
+        private UserModel GetCurrentUser(int userId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            if (user != null)
+            {
+                user.DecryptData();
+            }
+            return user;
+        }
+
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private bool VerifyPassword(string inputPassword, string storedHash)
+        {
+            return BCrypt.Net.BCrypt.Verify(inputPassword, storedHash);
         }
     }
 }

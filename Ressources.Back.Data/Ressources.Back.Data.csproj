@@ -10,6 +10,7 @@
 	</ImportGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 	</ItemGroup>
 
 </Project>

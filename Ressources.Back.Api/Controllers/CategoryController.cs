@@ -9,33 +9,38 @@ namespace Ressources.Back.Api.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository categoryRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(ICategoryRepository categoryRepository)
+        private readonly IUserRepository _userRepository;
+
+        public CategoryController(ICategoryRepository categoryRepository, IUserRepository userRepository)
         {
             _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-            this.categoryRepository = categoryRepository;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
+
         [HttpGet]
         [EnableCors("AllowOrigin")]
         public ActionResult<IEnumerable<CategoryModel>> Get()
         {
-            var categorys = categoryRepository.Read();
-            return Ok(categorys);
+            var categories = _categoryRepository.Read();
+            return Ok(categories);
         }
+
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
         public ActionResult<CategoryModel> GetCategoryById(int id)
         {
-            var category = categoryRepository.GetCategoryById(id);
+            var category = _categoryRepository.GetCategoryById(id);
             return Ok(category);
         }
+
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public ActionResult<CategoryModel> Post([FromBody] CategoryModel model, UserModel currentuser)
+        public ActionResult<CategoryModel> Post([FromBody] CategoryModel model, [FromHeader] int currentUserId)
         {
+            var currentuser = GetCurrentUser(currentUserId);
 
-            if (currentuser.IdTypeUser != 2)
+            if (currentuser == null || currentuser.IdTypeUser != 2)
             {
                 return Unauthorized();
             }
@@ -43,19 +48,27 @@ namespace Ressources.Back.Api.Controllers
             var category = _categoryRepository.Create(model);
             return Ok(category);
         }
+
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public ActionResult Put(int id, CategoryModel model)
+        public ActionResult Put(int id, [FromBody] CategoryModel model)
         {
-            categoryRepository.Update(id, model);
+            _categoryRepository.Update(id, model);
             return Ok();
         }
+
         [HttpDelete("{id}")]
         [EnableCors("AllowOrigin")]
         public ActionResult Delete(int id)
         {
-            categoryRepository.Delete(id);
+            _categoryRepository.Delete(id);
             return Ok();
+        }
+
+        private UserModel GetCurrentUser(int userId)
+        {
+            return _userRepository.GetUserById(userId);
         }
     }
 }
+
