@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ressources.Back.Data", "Res
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ressources.Back.Test", "Ressources.Back.Test\Ressources.Back.Test.csproj", "{C11D7B66-F733-47EB-87A2-DC204484B87F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A90AF478-A4BF-4409-8CC9-7C1B839897F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{19C46C45-EE5A-473F-B5F2-A5068FF4C406}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19C46C45-EE5A-473F-B5F2-A5068FF4C406} = {A90AF478-A4BF-4409-8CC9-7C1B839897F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A480A88-5F81-4BBB-967C-D7D5A060A6C4}
