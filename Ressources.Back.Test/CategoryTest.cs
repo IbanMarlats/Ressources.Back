@@ -15,13 +15,15 @@ namespace Ressources.Back.Test
     {
         private CategoryController _controller;
         private Mock<ICategoryRepository> _mockCategoryRepository;
+        private Mock<IUserRepository> _mockUserRepository;
 
         [SetUp]
         public void Setup()
         {
             _mockCategoryRepository = new Mock<ICategoryRepository>();
+            _mockUserRepository = new Mock<IUserRepository>();
 
-            _controller = new CategoryController(_mockCategoryRepository.Object);
+            _controller = new CategoryController(_mockCategoryRepository.Object, _mockUserRepository.Object);
         }
 
         //[Test]

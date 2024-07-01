@@ -22,7 +22,7 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             TypeUserModel? typeUser = context.TypeUser.FirstOrDefault(c => c.Id == id);
 
-            return typeUser;
+            return typeUser ?? throw new InvalidOperationException($"TypeUser with id {id} not found");
 
         }
         public TypeUserModel Create(TypeUserModel model)
