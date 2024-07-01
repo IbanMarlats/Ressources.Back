@@ -22,7 +22,7 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             RessourceModel? ressource = context.Ressource.FirstOrDefault(c => c.Id == id);
 
-            return ressource;
+            return ressource ?? throw new InvalidOperationException($"Ressource with id {id} not found");
 
         }
         public RessourceModel Create(RessourceModel model)

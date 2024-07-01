@@ -22,7 +22,7 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             PublicationModel? publication = context.Publication.FirstOrDefault(c => c.Id == id);
 
-            return publication;
+            return publication ?? throw new InvalidOperationException($"Publication with id {id} not found");
 
         }
         public PublicationModel Create(PublicationModel model)

@@ -24,14 +24,14 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             UserModel? user = context.User.FirstOrDefault(c => c.Login == login );
 
-            return user;
+            return user ?? throw new InvalidOperationException($"User with login {login} not found");
 
         }
         public UserModel GetUserById(int id)
         {
             UserModel? user = context.User.FirstOrDefault(c => c.Id == id);
 
-            return user;
+            return user ?? throw new InvalidOperationException($"User with id {id} not found");
 
         }
         public UserModel Create(UserModel model)
@@ -73,7 +73,7 @@ namespace Ressources.Back.Data.Repositories.Sql
         public UserModel Authenticate(string login, string mdp)
         {   
             var user = context.User.FirstOrDefault(c => c.Login == login && c.Mdp == mdp);
-            return user;
+            return user ?? throw new InvalidOperationException($"Wrong authenticate");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Ressources.Back.Data.Repositories.Sql
         {
             CategoryModel? category = context.Category.FirstOrDefault(c => c.Id == id);
 
-            return category;
+            return category ?? throw new InvalidOperationException($"Category with id {id} not found");
 
         }
         public CategoryModel Create(CategoryModel model)
