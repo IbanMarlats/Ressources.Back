@@ -1,6 +1,7 @@
 ﻿using BCrypt.Net;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Ressources.Back.Data.Models;
 using Ressources.Back.Data.Repositories;
 using System;
@@ -118,10 +119,12 @@ namespace Ressources.Back.Api.Controllers
         private UserModel GetCurrentUser(int userId)
         {
             var user = _userRepository.GetUserById(userId);
+
             if (user != null)
             {
                 user.DecryptData();
             }
+
             return user;
         }
 
