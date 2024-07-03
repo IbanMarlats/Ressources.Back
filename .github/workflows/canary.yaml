@@ -23,4 +23,4 @@ jobs:
               run: npm i --omit=dev
 
             - name: Start API
-              run: pm2 restart pm2.config.js
+              run: pm2 restart Ressources.Back.Api/pm2.config.js
