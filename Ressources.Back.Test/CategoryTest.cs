@@ -26,8 +26,8 @@ namespace Ressources.Back.Test
             _controller = new CategoryController(_mockCategoryRepository.Object, _mockUserRepository.Object);
         }
 
-        // [Test]
-        //public void Post_Administrator()
+        //  [Test]
+        //  public void Post_Administrator()
         //{
         //    var newCategory = new CategoryModel { Id = 3, Libelle = "TestCategorie" };
         //    _mockCategoryRepository.Setup(repo => repo.Create(newCategory)).Returns(newCategory);
