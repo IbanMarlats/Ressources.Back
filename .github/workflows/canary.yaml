@@ -1,0 +1,26 @@
+name: Canary Mode Deployment
+
+on:
+    workflow_call
+
+jobs:
+    deploy:
+        runs-on: self-hosted
+
+        env:
+            SERVER_PORT: 24000
+            BDD_HOST: 127.0.0.1
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18.x
+
+            - name: Install Dep
+              run: npm i --omit=dev
+
+            - name: Start API
+              run: pm2 restart pm2.config.js

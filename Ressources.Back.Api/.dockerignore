@@ -1,0 +1,11 @@
+.github
+.git
+coverage
+mysql
+node_modules
+test
+.env.example
+docker-compose.yml
+.gitignore
+pm2.config.js
+scripts

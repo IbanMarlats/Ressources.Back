@@ -1,0 +1,95 @@
+name: Integration continue
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    hello:
+        if: ${{ !contains(github.event.head_commit.message, '#code') }}
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18.x
+            - name: Run test
+              run: echo Hello le test
+
+    routage_main:
+        needs: [hello]
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18.x
+
+            - name: Install Dep
+              run: npm i
+              
+            - name: Test Main router
+              run: npm run test:file main_route
+
+    routage_user:
+        needs: [routage_main]
+        runs-on: ubuntu-latest
+
+        services:
+            mariadb:
+                image: mariadb:latest
+                env:
+                    MARIADB_ROOT_PASSWORD: toor
+                    MARIADB_DATABASE: test
+                    MARIADB_USER: test
+                    MARIADB_PASSWORD: test
+                ports:
+                    - 3306:3306
+                options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+                
+        env:
+            BDD_HOST: 127.0.0.1
+            BBD_PORT: 3306
+            BDD_NAME: test
+            BDD_USER: test
+            BDD_PASS: test
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Check BDD Cnx
+              run: |
+                sudo apt install -y mysql-client
+                mysql --host 127.0.0.1 --port 3306 -u root -ptoor -e "SHOW DATABASES"
+
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18.x
+    
+            - name: Install Dep
+              run: npm i
+
+            - name: Populate Table
+              run: npm run test:file init_bdd
+                    
+            - name: Test User router
+              run: npm run test:file user_route
+
+    canary:
+        needs: [routage_user]
+        if: ${{ contains(github.event.head_commit.message, '#canary') }}
+        uses: ./.github/workflows/canary.yaml
+
+    prod:
+        needs: [routage_user]
+        if: ${{ contains(github.event.head_commit.message, '#prod') }}
+        uses: ./.github/workflows/docker.yaml
+        secrets: inherit
