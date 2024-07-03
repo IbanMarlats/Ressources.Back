@@ -23,5 +23,8 @@ jobs:
       - name: Install Dependencies
         run: npm i
 
+      - name: Install PM2
+        run: npm install pm2 -g
+
       - name: Start API
         run: pm2 restart pm2.config.js
