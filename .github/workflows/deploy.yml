@@ -12,11 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: List files in directory
-        run: ls Ressources.Back.Api
-
       - name: Navigate to project directory
-        run: cd Ressources.Back.Api
+        run: cd Ressources.Back/Ressources.Back.Api
 
       - name: Setup node
         uses: actions/setup-node@v3
