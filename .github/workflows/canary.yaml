@@ -6,7 +6,7 @@ on:
 jobs:
     deploy:
         runs-on: self-hosted
-
+ 
         env:
             SERVER_PORT: 24000
             BDD_HOST: 127.0.0.1
