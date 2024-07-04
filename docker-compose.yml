@@ -31,3 +31,4 @@ services:
     image: adminer
     ports:
       - 3307:8080
+         
